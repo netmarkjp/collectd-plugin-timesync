@@ -33,11 +33,9 @@ jobs:
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
       - run: |
-          VERSION_DESCRIPTION=$(git show-ref --tags --abbrev=8 | sed -E 's@(.*) refs/tags/(.*)@\2: \1@') \
-          && echo ${VERSION_DESCRIPTION} \
-          && gox -os="linux darwin" -arch="amd64 arm64" -ldflags="-X main.Version=\"${VERSION_DESCRIPTION:?}\" -w -s" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}" \
-          && cd dist \
-          && ls -d * | xargs -I%% tar zcf %%.tar.gz %%
+          gox -os="linux darwin" -arch="amd64 arm64" -ldflags="-X main.Version=\"$(git show-ref --tags --abbrev=8 | sed -E 's@(.*) refs/tags/(.*)@\2: \1@')\" -w -s" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
+          cd dist
+          ls -d * | xargs -I%% tar zcf %%.tar.gz %%
       - run: find . -type f
       # release
       - name: Release
