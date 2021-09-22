@@ -1,11 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Release
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
+    tags:
+      - 'v*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,13 +26,17 @@ jobs:
         with:
           go-version: '1.17.1'
       - run: go version
-      # test
-      - run: go test ./...
-      # static analysis
-      - run: go vet ./...
-      - run: go install honnef.co/go/tools/cmd/staticcheck@latest
-      - run: staticcheck ./...
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
       - run: gox -os="linux darwin" -arch="amd64 arm64" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
+      - run: cd dist && ls -d * | xargs -I%% tar zcf %%.tar.gz %%
       - run: find . -type f
+      # release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/linux_amd64.tar.gz
+            dist/linux_arm64.tar.gz
+            dist/darwin_amd64.tar.gz
+            dist/darwin_arm64.tar.gz
