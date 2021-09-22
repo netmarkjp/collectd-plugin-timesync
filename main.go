@@ -33,14 +33,16 @@ func main() {
 		identifier string
 		interval   int
         showVersion bool
+        showVersionShort bool
 	)
 	flag.StringVar(&host, "host", "169.254.169.123", "destination host.")
 	flag.StringVar(&identifier, "identifier", fmt.Sprintf("%s/time/offset", hostname), "collectd identifier. first tier is replaced to hostname.")
 	flag.IntVar(&interval, "interval", 60, "interval(sec).")
 	flag.BoolVar(&showVersion, "version", false, "show version.")
+	flag.BoolVar(&showVersionShort, "v", false, "show version.")
 	flag.Parse()
 
-    if showVersion {
+    if showVersion || showVersionShort {
         fmt.Printf("Version: %s\n", Version)
         os.Exit(0)
     }

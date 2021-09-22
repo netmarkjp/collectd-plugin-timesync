@@ -14,9 +14,12 @@ collectd plugin
   -host string
         destination host (default "169.254.169.123")
   -identifier string
-        collectd identifier. first tier is replaced to hostname. (default "babatoshiakinoMacBook-Air.local/time/offset")
+        collectd identifier. first tier is replaced to hostname. (default "YOURHOSTNAME/time/offset")
   -interval int
         interval(sec) (default 60)
+  -v    show version.
+  -version
+        show version.
 ```
 
 # Example
