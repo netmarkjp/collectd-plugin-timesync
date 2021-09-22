@@ -33,7 +33,7 @@ jobs:
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
       - run: |
-          gox -os="linux darwin" -arch="amd64 arm64" -ldflags="-X main.Version=\"$(git show-ref --tags --abbrev=8 | sed -E 's@(.*) refs/tags/(.*)@\2: \1@')\" -w" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
+          gox -os="linux darwin" -arch="amd64 arm64" -ldflags="-X main.Version=\"$(git show-ref --tags --abbrev=8 | sed -E 's@(.*) refs/tags/(.*)@\2: \1@')\"" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
           cd dist
           ls -d * | xargs -I%% tar zcf %%.tar.gz %%
       - run: find . -type f
