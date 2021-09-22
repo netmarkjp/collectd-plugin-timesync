@@ -32,4 +32,22 @@ jobs:
       - run: staticcheck ./...
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
-      - run: gox
+      - run: |
+          VERSION_DESCRIPTION=$(git show-ref --tags --abbrev=8 | sed -E 's@(.*) refs/tags/(.*)@\2: \1@')
+          gox -os="linux darwin" -arch="amd64 arm64" -ldflags="-X main.Version=\"${VERSION_DESCRIPTION:?}\" -w -s" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
+          cd dist
+          ls -d * | xargs -I%% tar zcf %%.tar.gz %%
+      - run: find . -type f
+      # release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        # run only when tag is "v*"
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: |
+            dist/linux_amd64.tar.gz
+            dist/linux_arm64.tar.gz
+            dist/darwin_amd64.tar.gz
+            dist/darwin_arm64.tar.gz
+          draft: false
+          prerelease: false
