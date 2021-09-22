@@ -9,6 +9,10 @@ import (
 	"time"
 )
 
+var (
+    Version string
+)
+
 func getOffset(host string) (offset int64, err error) {
 	response, err := ntp.Query(host)
 	if err != nil {
@@ -28,11 +32,18 @@ func main() {
 		host       string
 		identifier string
 		interval   int
+        showVersion bool
 	)
-	flag.StringVar(&host, "host", "169.254.169.123", "destination host")
+	flag.StringVar(&host, "host", "169.254.169.123", "destination host.")
 	flag.StringVar(&identifier, "identifier", fmt.Sprintf("%s/time/offset", hostname), "collectd identifier. first tier is replaced to hostname.")
-	flag.IntVar(&interval, "interval", 60, "interval(sec)")
+	flag.IntVar(&interval, "interval", 60, "interval(sec).")
+	flag.BoolVar(&showVersion, "version", false, "show version.")
 	flag.Parse()
+
+    if showVersion {
+        fmt.Printf("Version: %s\n", Version)
+        os.Exit(0)
+    }
 
 	for {
 		now := time.Now()

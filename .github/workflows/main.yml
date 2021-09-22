@@ -32,5 +32,4 @@ jobs:
       - run: staticcheck ./...
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
-      - run: gox -os="linux darwin" -arch="amd64 arm64" -output="dist/{{.OS}}_{{.Arch}}/{{.Dir}}"
-      - run: find . -type f
+      - run: gox
