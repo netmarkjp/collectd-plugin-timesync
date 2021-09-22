@@ -33,3 +33,4 @@ jobs:
       # build
       - run: go get github.com/mitchellh/gox && go install github.com/mitchellh/gox
       - run: gox -os="linux darwin" -arch="amd64 arm64"
+      - run: find . -type f
