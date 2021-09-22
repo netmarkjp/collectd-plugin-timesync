@@ -19,7 +19,7 @@ func getOffset(host string) (offset int64, err error) {
 }
 
 func putval(collectdIdentifier string, now time.Time, offset int64) {
-	fmt.Println(fmt.Sprintf(`PUTVAL "%s" %d:%d`, collectdIdentifier, now.Unix(), offset))
+	fmt.Printf(`PUTVAL "%s" %d:%d`, collectdIdentifier, now.Unix(), offset)
 }
 
 func main() {
