@@ -12,11 +12,11 @@ collectd plugin
 
 ```
   -host string
-        destination host (default "169.254.169.123")
+        destination host. (default "169.254.169.123")
   -identifier string
-        collectd identifier. first tier is replaced to hostname. (default "YOURHOSTNAME/time/offset")
+        collectd identifier. first tier is replaced to hostname. respect COLLECTD_HOSTNAME environment variable. (default "$COLLECTD_HOSTNAME/exec-timesync/gauge-time_offset")
   -interval int
-        interval(sec) (default 60)
+        interval(sec). respect COLLECTD_INTERVAL environment variable. (default 60)
   -v    show version.
   -version
         show version.
