@@ -24,6 +24,8 @@ collectd plugin
 
 # Example
 
+## collectd.conf
+
 ```
 LoadPlugin exec
 <Plugin exec>
@@ -38,6 +40,20 @@ LoadPlugin exec
 <Plugin exec>
   Exec ubuntu "/usr/local/bin/collectd-plugin-timesync" "-host=time.google.com" "-interval=3"
 </Plugin>
+```
+
+## Output
+
+Syntax
+
+`PUTVAL {HOSTNAME}/exec-timesync/gauge-time_offset interval={N} {UNIXTIME}:{OFFSET_USEC}`
+
+Example
+
+```
+PUTVAL "admiin01/exec-timesync/gauge-time_offset" interval=60 1632440516:19252.930000
+PUTVAL "admiin01/exec-timesync/gauge-time_offset" interval=60 1632440576:16246.657000
+...
 ```
 
 # Install
