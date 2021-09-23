@@ -31,6 +31,15 @@ LoadPlugin exec
 </Plugin>
 ```
 
+with arguments
+
+```
+LoadPlugin exec
+<Plugin exec>
+  Exec ubuntu "/usr/local/bin/collectd-plugin-timesync" "-host=time.google.com" "-interval=3"
+</Plugin>
+```
+
 # Install
 
 1. Download and extract release artifacts
