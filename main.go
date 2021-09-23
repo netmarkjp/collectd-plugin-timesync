@@ -6,12 +6,12 @@ import (
 	"github.com/beevik/ntp"
 	"log"
 	"os"
+	"strconv"
 	"time"
-    "strconv"
 )
 
 var (
-    Version string
+	Version string
 )
 
 func getOffset(host string) (offset float64, err error) {
@@ -29,19 +29,19 @@ func putval(collectdIdentifier string, interval int, now time.Time, offset float
 
 func main() {
 	defaultHostname, _ := os.Hostname()
-    if os.Getenv("COLLECTD_HOSTNAME") != ""{
-        defaultHostname = os.Getenv("COLLECTD_HOSTNAME")
-    }
-    defaultInterval := 60
-    if os.Getenv("COLLECTD_INTERVAL") != ""{
-        defaultInterval, _ = strconv.Atoi(os.Getenv("COLLECTD_INTERVAL"))
-    }
+	if os.Getenv("COLLECTD_HOSTNAME") != "" {
+		defaultHostname = os.Getenv("COLLECTD_HOSTNAME")
+	}
+	defaultInterval := 60
+	if os.Getenv("COLLECTD_INTERVAL") != "" {
+		defaultInterval, _ = strconv.Atoi(os.Getenv("COLLECTD_INTERVAL"))
+	}
 	var (
-		host       string
-		identifier string
-		interval   int
-        showVersion bool
-        showVersionShort bool
+		host             string
+		identifier       string
+		interval         int
+		showVersion      bool
+		showVersionShort bool
 	)
 	flag.StringVar(&host, "host", "169.254.169.123", "destination host.")
 	flag.StringVar(&identifier, "identifier", fmt.Sprintf("%s/exec-timesync/gauge-time_offset", defaultHostname), "collectd identifier. first tier is replaced to hostname. respect COLLECTD_HOSTNAME environment variable.")
@@ -50,10 +50,10 @@ func main() {
 	flag.BoolVar(&showVersionShort, "v", false, "show version.")
 	flag.Parse()
 
-    if showVersion || showVersionShort {
-        fmt.Printf("Version: %s\n", Version)
-        os.Exit(0)
-    }
+	if showVersion || showVersionShort {
+		fmt.Printf("Version: %s\n", Version)
+		os.Exit(0)
+	}
 
 	for {
 		now := time.Now()
