@@ -19,7 +19,7 @@ func getOffset(host string) (offset float64, err error) {
 	if err != nil {
 		return offset, err
 	}
-	offset = response.ClockOffset.Seconds()
+	offset = response.ClockOffset.Seconds() * 1000 * 1000
 	return offset, err
 }
 
