@@ -24,10 +24,12 @@ jobs:
         with:
           go-version: '1.17.1'
       - run: go version
+      # format
+      - run: go install golang.org/x/tools/cmd/goimports@latest
+      - run: GOIMPORTS=$(goimports -l .) && echo ${GOIMPORTS:?} && test `echo ${GOIMPORTS:?} | wc -l` = 0
       # test
       - run: go test ./...
       # static analysis
-      - run: GOIMPORTS=$(goimports -l .) && echo ${GOIMPORTS:?} && test `echo ${GOIMPORTS:?} | wc -l` = 0
       - run: go vet ./...
       - run: go install honnef.co/go/tools/cmd/staticcheck@latest
       - run: staticcheck ./...
