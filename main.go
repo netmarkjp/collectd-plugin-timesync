@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/beevik/ntp"
 	"log"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/beevik/ntp"
 )
 
 var (
