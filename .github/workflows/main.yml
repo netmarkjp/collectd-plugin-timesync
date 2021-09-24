@@ -26,7 +26,12 @@ jobs:
       - run: go version
       # format
       - run: go install golang.org/x/tools/cmd/goimports@latest
-      - run: GOIMPORTS=$(goimports -l .) && echo ${GOIMPORTS:?} && test `echo ${GOIMPORTS:?} | wc -l` = 0
+      - run: |
+          GOIMPORTS=$(goimports -l .) || :
+          if [[ "${GOIMPORTS}x" != "x" ]]; then
+            echo ${GOIMPORTS:?}
+            exit 1
+          fi
       # test
       - run: go test ./...
       # static analysis
